@@ -44,7 +44,7 @@ class StudentController extends Controller
         }
 
         $students = $query->orderBy('created_at', 'desc')
-                          ->paginate(2)
+                          ->paginate(10)
                           ->withQueryString();
 
         // Dashboard statistics
@@ -104,6 +104,6 @@ class StudentController extends Controller
     {
         $student->delete();
 
-        return back()->with('success', 'Student deleted successfully');
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully');
     }
 }
