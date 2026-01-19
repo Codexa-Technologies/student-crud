@@ -1,0 +1,90 @@
+@extends('layouts.app')
+
+@section('title', 'Create Student')
+@section('content')
+<div class="content-container">
+    <div class="page-header">
+        <h1 class="page-title">Create New Student</h1>
+        <p class="page-subtitle">Add a new student record to the system</p>
+    </div>
+    
+    <div class="form-card">
+        <form method="POST" action="{{ route('students.store') }}" id="studentForm">
+            @csrf
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label">Full Name *</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="name" value="{{ old('name') }}" 
+                               class="form-control-enhanced @error('name') error-input @enderror" 
+                               placeholder="Enter full name" required>
+                    </div>
+                    @error('name')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <label class="form-label">Email Address *</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" value="{{ old('email') }}" 
+                               class="form-control-enhanced @error('email') error-input @enderror" 
+                               placeholder="Enter email address" required>
+                    </div>
+                    @error('email')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label">NIC Number</label>
+                    <div class="input-icon">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" name="nic" value="{{ old('nic') }}" 
+                               class="form-control-enhanced @error('nic') error-input @enderror" 
+                               placeholder="Enter NIC number">
+                    </div>
+                    @error('nic')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <label class="form-label">Age</label>
+                    <div class="input-icon">
+                        <i class="fas fa-birthday-cake"></i>
+                        <input type="number" name="age" value="{{ old('age') }}" 
+                               class="form-control-enhanced @error('age') error-input @enderror" 
+                               placeholder="Enter age" min="1" max="120">
+                    </div>
+                    @error('age')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="{{ route('students.index') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Students
+                </a>
+                <div class="d-flex gap-3">
+                    <button type="reset" class="btn-enhanced btn-secondary-enhanced">
+                        <i class="fas fa-redo"></i>
+                        <span>Reset</span>
+                    </button>
+                    <button type="submit" class="btn-enhanced btn-success-enhanced">
+                        <i class="fas fa-save"></i>
+                        <span>Create Student</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
