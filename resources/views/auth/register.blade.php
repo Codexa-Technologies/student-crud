@@ -1,88 +1,57 @@
 @extends('layouts.app')
-@section('title','Register - Student CRUD')
+
+@section('title','Register')
 @section('content')
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center py-4">
-                    <i class="fas fa-user-plus fa-3x mb-2"></i>
-                    <h4 class="mb-0">Create Account</h4>
-                    <small>Join us and start managing students</small>
+<div class="d-flex justify-content-center align-items-center" style="min-height:100vh;">
+    <div class="auth-card" style="width:520px;">
+        <div class="text-center" style="background:#0ea5e9;padding:28px;border-top-left-radius:8px;border-top-right-radius:8px;color:#fff;">
+            <i class="fas fa-user-plus fa-3x mb-2"></i>
+            <h3 class="mb-0">Create Account</h3>
+            <p class="small mb-0">Register a new account</p>
+        </div>
+
+        <div class="p-4" style="background:#fff;border:1px solid rgba(0,0,0,0.03);border-bottom-left-radius:8px;border-bottom-right-radius:8px;">
+            @if($errors->any())
+                <div class="alert-enhanced alert-danger-enhanced mb-3">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="card-body p-4">
-                    @if(session('success'))
-                        <div class="alert alert-success d-flex align-items-center">
-                            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                        </div>
-                    @endif
-                    
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Full Name</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fas fa-user text-primary"></i></span>
-                                <input type="text" name="name" 
-                                       class="form-control @error('name') is-invalid @enderror" 
-                                       value="{{ old('name') }}" 
-                                       placeholder="Enter your full name" required>
-                            </div>
-                            @error('name')
-                                <div class="text-danger small mt-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
-                            @enderror
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Email Address</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fas fa-envelope text-primary"></i></span>
-                                <input type="email" name="email" 
-                                       class="form-control @error('email') is-invalid @enderror" 
-                                       value="{{ old('email') }}" 
-                                       placeholder="Enter your email" required>
-                            </div>
-                            @error('email')
-                                <div class="text-danger small mt-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
-                            @enderror
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Password</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light"><i class="fas fa-lock text-primary"></i></span>
-                                    <input type="password" name="password" 
-                                           class="form-control @error('password') is-invalid @enderror" 
-                                           placeholder="Create password" required>
-                                </div>
-                                @error('password')
-                                    <div class="text-danger small mt-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
-                                @enderror
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Confirm Password</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light"><i class="fas fa-check-circle text-primary"></i></span>
-                                    <input type="password" name="password_confirmation" 
-                                           class="form-control" 
-                                           placeholder="Confirm password" required>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary w-100 py-2 mt-2">
-                            <i class="fas fa-user-plus me-2"></i>Create Account
-                        </button>
-                    </form>
+            @endif
+
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control-enhanced" required autofocus>
                 </div>
-                <div class="card-footer bg-light text-center py-3">
-                    <span class="text-muted">Already have an account?</span>
-                    <a href="{{ route('login') }}" class="text-decoration-none fw-semibold ms-1">
-                        <i class="fas fa-sign-in-alt"></i> Sign In
-                    </a>
+
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control-enhanced" required>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control-enhanced" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" name="password_confirmation" class="form-control-enhanced" required>
+                    </div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn-enhanced btn-primary-enhanced"><i class="fas fa-user-plus me-1"></i>Register</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3 small">
+                Already have an account? <a href="{{ route('login') }}">Login</a>
             </div>
         </div>
     </div>

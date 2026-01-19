@@ -15,6 +15,8 @@ class StudentFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
+            'nic' => $this->faker->unique()->bothify('########?#'),
+            'age' => $this->faker->numberBetween(16, 60),
         ];
     }
 }

@@ -7,7 +7,6 @@ $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 use App\Models\Student;
 
-// Create 15 students manually
 for ($i = 1; $i <= 15; $i++) {
     Student::create([
         'name' => "Student $i",

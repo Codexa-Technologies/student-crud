@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Student::query();
+        $query = Student::with('course');
 
         if ($request->filled('q')) {
             $q = trim($request->q);
@@ -44,8 +45,8 @@ class StudentController extends Controller
         }
 
         $students = $query->orderBy('created_at', 'desc')
-                          ->paginate(10)
-                          ->withQueryString();
+                  ->paginate(10)
+                  ->withQueryString();
 
         // Dashboard statistics
         $totalStudents = Student::count();
@@ -57,7 +58,8 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('students.create');
+        $courses = Course::orderBy('name')->get();
+        return view('students.create', compact('courses'));
     }
 
     public function store(Request $request)
@@ -66,7 +68,8 @@ class StudentController extends Controller
             'name'  => 'required|string|max:255|min:5',
             'email' => 'required|email:rfc,dns|unique:students,email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'nic'   => 'nullable|string|min:9|max:12|unique:students,nic',
-            'age'   => 'nullable|integer|min:6|max:100'
+            'age'   => 'nullable|integer|min:6|max:100',
+            'course_id' => 'nullable|exists:courses,id'
         ]);
 
         Student::create($data);
@@ -77,12 +80,14 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
+        $student->load('course');
         return view('students.show', compact('student'));
     }
 
     public function edit(Student $student)
     {
-        return view('students.edit', compact('student'));
+        $courses = Course::orderBy('name')->get();
+        return view('students.edit', compact('student', 'courses'));
     }
 
     public function update(Request $request, Student $student)
@@ -91,7 +96,8 @@ class StudentController extends Controller
             'name'  => 'required|string|max:255|min:2',
             'email' => 'required|email:rfc,dns|unique:students,email,' . $student->id . '|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'nic'   => 'nullable|string|max:20|unique:students,nic,' . $student->id,
-            'age'   => 'nullable|integer|min:1|max:120'
+            'age'   => 'nullable|integer|min:1|max:120',
+            'course_id' => 'nullable|exists:courses,id'
         ]);
 
         $student->update($data);

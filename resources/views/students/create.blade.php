@@ -4,8 +4,8 @@
 @section('content')
 <div class="content-container">
     <div class="page-header">
-        <h1 class="page-title">Create New Student</h1>
-        <p class="page-subtitle">Add a new student record to the system</p>
+        <h1 class="page-title">Create Student</h1>
+        <p class="page-subtitle">Add a new student record</p>
     </div>
     
     <div class="form-card">
@@ -13,7 +13,7 @@
             @csrf
             
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-3">
                     <label class="form-label">Full Name *</label>
                     <div class="input-icon">
                         <i class="fas fa-user"></i>
@@ -26,7 +26,7 @@
                     @enderror
                 </div>
                 
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-3">
                     <label class="form-label">Email Address *</label>
                     <div class="input-icon">
                         <i class="fas fa-envelope"></i>
@@ -41,7 +41,7 @@
             </div>
             
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-3">
                     <label class="form-label">NIC Number</label>
                     <div class="input-icon">
                         <i class="fas fa-id-card"></i>
@@ -54,7 +54,7 @@
                     @enderror
                 </div>
                 
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-3">
                     <label class="form-label">Age</label>
                     <div class="input-icon">
                         <i class="fas fa-birthday-cake"></i>
@@ -67,13 +67,28 @@
                     @enderror
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Course</label>
+                    <select name="course_id" class="form-control-enhanced @error('course_id') error-input @enderror">
+                        <option value="">-- Select course (optional) --</option>
+                        @foreach($courses as $c)
+                            <option value="{{ $c->id }}" {{ old('course_id') == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('course_id')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
             
-            <div class="d-flex justify-content-between align-items-center mt-5">
+            <div class="d-flex justify-content-between align-items-center mt-4">
                 <a href="{{ route('students.index') }}" class="back-link">
                     <i class="fas fa-arrow-left"></i>
                     Back to Students
                 </a>
-                <div class="d-flex gap-3">
+                <div class="d-flex gap-2">
                     <button type="reset" class="btn-enhanced btn-secondary-enhanced">
                         <i class="fas fa-redo"></i>
                         <span>Reset</span>

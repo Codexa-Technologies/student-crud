@@ -14,6 +14,12 @@ class Student extends Model
         'email',
         'phone',
         'nic',
-        'age'
+        'age',
+        'course_id',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
