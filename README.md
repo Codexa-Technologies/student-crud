@@ -67,7 +67,7 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-- Create the database (`your_database_name`) in MySQL/MariaDB.
+- Create the database (`your_database_name`) in MySQL.
 - Ensure the user has privileges to create tables and insert data.
 - If you change connection details, run `php artisan config:clear` to reload config.
 
